@@ -548,9 +548,6 @@ texture_scale = 0.7
 position = Vector2(180, 163)
 disable_mode = 1
 
-[node name="EngineParts" parent="." instance=ExtResource("17_sotcw")]
-position = Vector2(133, 185)
-
 [connection signal="glow" from="Interface/Menu" to="Environment/Camera" method="_on_menu_glow"]
 [connection signal="hdr" from="Interface/Menu" to="Environment/Camera" method="_on_menu_hdr"]
 [connection signal="body_entered" from="Environment/BossStarter" to="Environment/Camera" method="_on_boss_starter_body_entered"]
