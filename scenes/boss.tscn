@@ -1,0 +1,297 @@
+[gd_scene load_steps=37 format=3 uid="uid://7weojjjsja0g"]
+
+[ext_resource type="Script" path="res://scripts/boss.gd" id="1_knvlm"]
+[ext_resource type="Texture2D" uid="uid://cph3fllugh0oi" path="res://art/boss/head.png" id="2_6n834"]
+[ext_resource type="Texture2D" uid="uid://bxm8pc41khgyi" path="res://art/boss/head_n.png" id="3_01i8w"]
+[ext_resource type="Texture2D" uid="uid://cqlfast5nagm0" path="res://art/boss/mid.png" id="3_s0vbm"]
+[ext_resource type="Texture2D" uid="uid://dolvsx2cn7cjw" path="res://art/boss/foreground 1.png" id="4_n7cxe"]
+[ext_resource type="Texture2D" uid="uid://dad7vwyh2unqv" path="res://art/boss/mid_n.png" id="5_7gkny"]
+[ext_resource type="Texture2D" uid="uid://dpmqbk8iy4x4d" path="res://art/boss/foreground 2.png" id="5_88dad"]
+[ext_resource type="Texture2D" uid="uid://drq3ayqroguwu" path="res://art/boss/bottom.png" id="6_so2ot"]
+[ext_resource type="Texture2D" uid="uid://sgvrn8nut03f" path="res://art/boss/arm back.png" id="7_0phdi"]
+[ext_resource type="Texture2D" uid="uid://dso04oksi1k4y" path="res://art/boss/foreground 1_n.png" id="7_j328i"]
+[ext_resource type="Texture2D" uid="uid://bqavfeercea3x" path="res://art/boss/drill.png" id="8_cq51v"]
+[ext_resource type="Texture2D" uid="uid://cawkjycywnfvk" path="res://art/boss/foreground 2_n.png" id="9_ls6md"]
+[ext_resource type="Texture2D" uid="uid://cx5us725pyydi" path="res://art/boss/Warning.png" id="9_n4y73"]
+[ext_resource type="Texture2D" uid="uid://blxr655dnh51b" path="res://art/boss/shootey arm.png" id="10_55bxp"]
+[ext_resource type="Texture2D" uid="uid://cyf0ut2r2eu0" path="res://art/boss/bottom_n.png" id="11_yykc0"]
+[ext_resource type="Texture2D" uid="uid://by8t6e6dsybf8" path="res://art/boss/arm back_n.png" id="13_af3ek"]
+[ext_resource type="Texture2D" uid="uid://c4h2vbej8nqc2" path="res://art/boss/drill_n.png" id="15_d0fex"]
+[ext_resource type="Texture2D" uid="uid://c3ynp3dh5mrds" path="res://art/boss/shootey arm_n.png" id="18_xq1a3"]
+[ext_resource type="PackedScene" uid="uid://cjrurkpoduebb" path="res://scenes/explosion.tscn" id="19_duktk"]
+
+[sub_resource type="Animation" id="Animation_1nrrp"]
+resource_name = "HandWave"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BodyParts/Arm:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.436332, -0.436332, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BodyParts/Drill:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.436332, -0.436332, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_owxya"]
+resource_name = "HeadBob"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BodyParts/Head:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 5), Vector2(0, 0), Vector2(0, 5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BodyParts/Body:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 5), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dlrkc"]
+_data = {
+"HandWave": SubResource("Animation_1nrrp"),
+"HeadBob": SubResource("Animation_owxya")
+}
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_dhwrc"]
+diffuse_texture = ExtResource("2_6n834")
+normal_texture = ExtResource("3_01i8w")
+
+[sub_resource type="Gradient" id="Gradient_ugtkr"]
+interpolation_color_space = 2
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_enr7d"]
+gradient = SubResource("Gradient_ugtkr")
+width = 160
+height = 160
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 1)
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_l2kyu"]
+diffuse_texture = ExtResource("7_0phdi")
+normal_texture = ExtResource("13_af3ek")
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_bqh0y"]
+diffuse_texture = ExtResource("8_cq51v")
+normal_texture = ExtResource("15_d0fex")
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_j3vco"]
+diffuse_texture = ExtResource("4_n7cxe")
+normal_texture = ExtResource("7_j328i")
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_g265b"]
+diffuse_texture = ExtResource("5_88dad")
+normal_texture = ExtResource("9_ls6md")
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_2dibe"]
+diffuse_texture = ExtResource("6_so2ot")
+normal_texture = ExtResource("11_yykc0")
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_bj5sf"]
+diffuse_texture = ExtResource("3_s0vbm")
+normal_texture = ExtResource("5_7gkny")
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_75tno"]
+diffuse_texture = ExtResource("10_55bxp")
+normal_texture = ExtResource("18_xq1a3")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_28wcw"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(128, 1, 1)
+direction = Vector3(0, 0, 0)
+flatness = 1.0
+initial_velocity_min = 4.0
+initial_velocity_max = 6.0
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n2k5k"]
+size = Vector2(256, 1)
+
+[sub_resource type="Gradient" id="Gradient_3a1d2"]
+colors = PackedColorArray(1, 0, 0, 1, 1, 0.368627, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_38jdf"]
+gradient = SubResource("Gradient_3a1d2")
+
+[node name="Boss" type="Node2D"]
+script = ExtResource("1_knvlm")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_dlrkc")
+}
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_dlrkc")
+}
+
+[node name="BodyParts" type="Node2D" parent="."]
+
+[node name="Head" type="Sprite2D" parent="BodyParts"]
+unique_name_in_owner = true
+position = Vector2(0, 4.64491)
+texture = SubResource("CanvasTexture_dhwrc")
+
+[node name="PointLight2D" type="PointLight2D" parent="BodyParts/Head"]
+visible = false
+position = Vector2(16, -69)
+color = Color(1, 0, 0, 1)
+texture = SubResource("GradientTexture2D_enr7d")
+
+[node name="PointLight2D2" type="PointLight2D" parent="BodyParts/Head"]
+visible = false
+position = Vector2(48, -61)
+color = Color(1, 0, 0, 1)
+texture = SubResource("GradientTexture2D_enr7d")
+
+[node name="PointLight2D3" type="PointLight2D" parent="BodyParts/Head"]
+visible = false
+position = Vector2(64, -93)
+color = Color(1, 0, 0, 1)
+texture = SubResource("GradientTexture2D_enr7d")
+
+[node name="PointLight2D4" type="PointLight2D" parent="BodyParts/Head"]
+visible = false
+position = Vector2(96, -61)
+color = Color(1, 0, 0, 1)
+texture = SubResource("GradientTexture2D_enr7d")
+
+[node name="PointLight2D5" type="PointLight2D" parent="BodyParts/Head"]
+visible = false
+position = Vector2(80, -45)
+color = Color(1, 0, 0, 1)
+texture = SubResource("GradientTexture2D_enr7d")
+
+[node name="PointLight2D6" type="PointLight2D" parent="BodyParts/Head"]
+visible = false
+position = Vector2(30, -43)
+color = Color(1, 0, 0, 1)
+texture = SubResource("GradientTexture2D_enr7d")
+
+[node name="Arm" type="Sprite2D" parent="BodyParts"]
+unique_name_in_owner = true
+texture = SubResource("CanvasTexture_l2kyu")
+
+[node name="Drill" type="Area2D" parent="BodyParts"]
+unique_name_in_owner = true
+scale = Vector2(0.75, 0.75)
+collision_layer = 16
+metadata/_edit_group_ = true
+
+[node name="Collision" type="CollisionPolygon2D" parent="BodyParts/Drill"]
+position = Vector2(-32, -21.3333)
+polygon = PackedVector2Array(-144, -72, -136, -56, -136, -24, -152, -8, -144, 8, -128, 32, -72, 88, -16, -32, -24, -80, -80, -112)
+disabled = true
+
+[node name="DrillSprite" type="Sprite2D" parent="BodyParts/Drill"]
+texture = SubResource("CanvasTexture_bqh0y")
+offset = Vector2(-32, -16)
+
+[node name="Grass" type="Sprite2D" parent="BodyParts"]
+texture = SubResource("CanvasTexture_j3vco")
+
+[node name="Grass2" type="Sprite2D" parent="BodyParts"]
+texture = SubResource("CanvasTexture_g265b")
+
+[node name="Legs" type="Sprite2D" parent="BodyParts"]
+texture = SubResource("CanvasTexture_2dibe")
+
+[node name="Body" type="Sprite2D" parent="BodyParts"]
+position = Vector2(0, 0.355093)
+texture = SubResource("CanvasTexture_bj5sf")
+
+[node name="DrillLine" type="Sprite2D" parent="BodyParts"]
+unique_name_in_owner = true
+visible = false
+scale = Vector2(3.5, 10)
+texture = ExtResource("9_n4y73")
+
+[node name="LaserGun" type="Sprite2D" parent="BodyParts"]
+unique_name_in_owner = true
+visible = false
+position = Vector2(65, 50)
+rotation = 0.785398
+texture = SubResource("CanvasTexture_75tno")
+
+[node name="RedLaser" type="Area2D" parent="BodyParts/LaserGun"]
+z_index = 2
+position = Vector2(-13.4349, 78.4889)
+rotation = -0.785398
+scale = Vector2(1, 16)
+collision_layer = 16
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="BodyParts/LaserGun/RedLaser"]
+process_material = SubResource("ParticleProcessMaterial_28wcw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BodyParts/LaserGun/RedLaser"]
+position = Vector2(-0.000114441, -7.15256e-06)
+shape = SubResource("RectangleShape2D_n2k5k")
+disabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="BodyParts/LaserGun/RedLaser"]
+texture = SubResource("GradientTexture1D_38jdf")
+
+[node name="Exploders" type="Node2D" parent="."]
+
+[node name="Explosion" parent="Exploders" instance=ExtResource("19_duktk")]
+position = Vector2(71, -88)
+scale = Vector2(3, 3)
+frame = 7
+frame_progress = 1.0
+
+[node name="Explosion2" parent="Exploders" instance=ExtResource("19_duktk")]
+position = Vector2(24, -38)
+scale = Vector2(3, 3)
+frame = 7
+frame_progress = 1.0
+
+[node name="Explosion3" parent="Exploders" instance=ExtResource("19_duktk")]
+position = Vector2(74, 32)
+scale = Vector2(3, 3)
+frame = 7
+frame_progress = 1.0
+
+[node name="Explosion4" parent="Exploders" instance=ExtResource("19_duktk")]
+position = Vector2(-29, -5)
+scale = Vector2(3, 3)
+frame = 7
+frame_progress = 1.0
+
+[connection signal="drill_finished" from="." to="." method="_on_drill_finished"]
+[connection signal="laser_finished" from="." to="." method="_on_laser_finished"]
+[connection signal="body_entered" from="BodyParts/Drill" to="." method="_on_drill_body_entered"]
+[connection signal="body_entered" from="BodyParts/LaserGun/RedLaser" to="." method="_on_red_laser_body_entered"]

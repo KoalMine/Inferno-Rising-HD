@@ -1,0 +1,159 @@
+[gd_scene load_steps=20 format=3 uid="uid://4jku7ieg8b7v"]
+
+[ext_resource type="Texture2D" uid="uid://kd8rlw7i8h2k" path="res://art/animation/Fireball.png" id="1_nhenv"]
+[ext_resource type="Script" path="res://scripts/fireball.gd" id="1_vwb0w"]
+[ext_resource type="Texture2D" uid="uid://c0dfef6cvj5ol" path="res://shaders/light.tres" id="3_aljbe"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g1rmp"]
+radius = 7.0
+height = 22.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wi6te"]
+atlas = ExtResource("1_nhenv")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i3br2"]
+atlas = ExtResource("1_nhenv")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bkn37"]
+atlas = ExtResource("1_nhenv")
+region = Rect2(64, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gihbj"]
+atlas = ExtResource("1_nhenv")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_be8qw"]
+atlas = ExtResource("1_nhenv")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ysdjl"]
+atlas = ExtResource("1_nhenv")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ve23"]
+atlas = ExtResource("1_nhenv")
+region = Rect2(96, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uhl34"]
+atlas = ExtResource("1_nhenv")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_us8vu"]
+atlas = ExtResource("1_nhenv")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_aw06f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wi6te")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i3br2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bkn37")
+}],
+"loop": true,
+"name": &"down",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gihbj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_be8qw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ysdjl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ve23")
+}],
+"loop": false,
+"name": &"turn",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uhl34")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_us8vu")
+}],
+"loop": true,
+"name": &"up",
+"speed": 10.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_vaass"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.367977, 1)
+colors = PackedColorArray(0.494994, 0.0738485, 0, 1, 0.534031, 0.137907, 0.0240471, 1, 0.870588, 0.690196, 0.231373, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3ifkc"]
+gradient = SubResource("Gradient_vaass")
+
+[sub_resource type="Curve" id="Curve_166x0"]
+_data = [Vector2(0.0194175, 0), 0.0, 0.0, 0, 0, Vector2(0.320388, 0.537052), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.07687, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ayo6p"]
+curve = SubResource("Curve_166x0")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wjj27"]
+emission_shape = 1
+emission_sphere_radius = 9.0
+particle_flag_disable_z = true
+direction = Vector3(0, 1, 0)
+spread = 0.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 20.0
+initial_velocity_max = 30.0
+angular_velocity_min = -145.4
+angular_velocity_max = 138.89
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+damping_min = 32.618
+damping_max = 32.618
+scale_min = 0.5
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_ayo6p")
+color_ramp = SubResource("GradientTexture1D_3ifkc")
+turbulence_noise_strength = 4.85
+turbulence_noise_scale = 2.6
+
+[node name="Fireball" type="RigidBody2D"]
+z_index = 2
+collision_layer = 8
+collision_mask = 4
+script = ExtResource("1_vwb0w")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("CapsuleShape2D_g1rmp")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -7)
+sprite_frames = SubResource("SpriteFrames_aw06f")
+animation = &"up"
+
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(1, 0.592157, 0.47451, 1)
+texture = ExtResource("3_aljbe")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+visible = false
+position = Vector2(0, 7)
+process_material = SubResource("ParticleProcessMaterial_wjj27")
+visibility_rect = Rect2(-5.82269, -17.5969, 12.2978, 22.0282)
+
+[connection signal="timeout" from="DeathTimer" to="." method="_on_timer_timeout"]

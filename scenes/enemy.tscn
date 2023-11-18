@@ -1,0 +1,62 @@
+[gd_scene load_steps=7 format=3 uid="uid://bjjqvkcq3habf"]
+
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_ai1xi"]
+[ext_resource type="Texture2D" uid="uid://hap2v8lehaly" path="res://art/Soldier_01-sheet.png" id="2_08bhr"]
+[ext_resource type="Script" path="res://scripts/weapon.gd" id="3_6lice"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dvhqp"]
+size = Vector2(12, 27)
+
+[sub_resource type="Gradient" id="Gradient_i51mg"]
+colors = PackedColorArray(1, 0, 0, 1, 1, 0, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vaj0p"]
+gradient = SubResource("Gradient_i51mg")
+
+[node name="Enemy" type="Area2D"]
+collision_layer = 4
+collision_mask = 8
+script = ExtResource("1_ai1xi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_dvhqp")
+
+[node name="Body" type="Sprite2D" parent="."]
+texture = ExtResource("2_08bhr")
+region_enabled = true
+region_rect = Rect2(8, 0, 16, 32)
+
+[node name="Weapon" type="Node2D" parent="."]
+script = ExtResource("3_6lice")
+
+[node name="DetectorRayCast" type="RayCast2D" parent="Weapon"]
+target_position = Vector2(500, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Weapon/DetectorRayCast"]
+visible = false
+texture = SubResource("GradientTexture1D_vaj0p")
+offset = Vector2(150, 0)
+
+[node name="RedLine" type="Line2D" parent="Weapon"]
+position = Vector2(0, -2)
+points = PackedVector2Array(0, 0)
+width = 1.0
+default_color = Color(1.50196, 0, 0, 0.27451)
+
+[node name="WeaponSprite" type="Sprite2D" parent="Weapon"]
+texture = ExtResource("2_08bhr")
+flip_h = true
+flip_v = true
+region_enabled = true
+region_rect = Rect2(3, 42, 21, 8)
+
+[node name="LaserCast" type="RayCast2D" parent="Weapon/WeaponSprite"]
+unique_name_in_owner = true
+target_position = Vector2(500, 0)
+collision_mask = 3
+
+[node name="DelayBetweenShots" type="Timer" parent="Weapon"]
+one_shot = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered" unbinds=1]

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://di6vivhqh1w78"]
+
+[ext_resource type="TileSet" uid="uid://bjhm3fytsxyxv" path="res://shaders/level.tres" id="1_x4cqt"]
+[ext_resource type="Script" path="res://scripts/boss_gate.gd" id="2_mh5ps"]
+
+[node name="BossGate" type="TileMap"]
+tile_set = ExtResource("1_x4cqt")
+format = 2
+layer_0/tile_data = PackedInt32Array(0, 458752, 0, 65536, 458752, 0, 131072, 458752, 0)
+script = ExtResource("2_mh5ps")

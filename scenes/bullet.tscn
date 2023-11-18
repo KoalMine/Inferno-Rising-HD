@@ -1,0 +1,116 @@
+[gd_scene load_steps=15 format=3 uid="uid://cj0m3l3wkk3sd"]
+
+[ext_resource type="Texture2D" uid="uid://dbrc4jwo75gxu" path="res://art/Projectiles.png" id="1_aoiwq"]
+[ext_resource type="Script" path="res://scripts/bullet.gd" id="1_r8wd2"]
+[ext_resource type="Texture2D" uid="uid://dajhbyy81d2kq" path="res://art/animation/explosion.png" id="3_dysnq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2d4h1"]
+size = Vector2(2, 3)
+
+[sub_resource type="Gradient" id="Gradient_vaass"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.367977, 1)
+colors = PackedColorArray(0.494994, 0.0738485, 0, 1, 0.534031, 0.137907, 0.0240471, 1, 0.870588, 0.690196, 0.231373, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_o5qx7"]
+gradient = SubResource("Gradient_vaass")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_03amd"]
+emission_shape = 2
+emission_sphere_radius = 1.0
+particle_flag_disable_z = true
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 25.0
+initial_velocity_max = 25.0
+angular_velocity_min = 388.8
+angular_velocity_max = 720.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+damping_min = 100.0
+damping_max = 100.0
+scale_min = 0.2
+color_ramp = SubResource("GradientTexture1D_o5qx7")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6f7rf"]
+atlas = ExtResource("3_dysnq")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uvjbk"]
+atlas = ExtResource("3_dysnq")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xrffn"]
+atlas = ExtResource("3_dysnq")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1163c"]
+atlas = ExtResource("3_dysnq")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_txb5n"]
+atlas = ExtResource("3_dysnq")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8k3io"]
+atlas = ExtResource("3_dysnq")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xtnbo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6f7rf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uvjbk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xrffn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1163c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_txb5n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8k3io")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Bullet" type="Area2D"]
+z_index = 2
+rotation = 1.5708
+collision_layer = 16
+collision_mask = 3
+script = ExtResource("1_r8wd2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1.5)
+shape = SubResource("RectangleShape2D_2d4h1")
+
+[node name="BulletSprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -2)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_aoiwq")
+region_enabled = true
+region_rect = Rect2(1, 0, 3, 7)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_03amd")
+lifetime = 0.3
+one_shot = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
+sprite_frames = SubResource("SpriteFrames_xtnbo")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="finished" from="GPUParticles2D" to="." method="_on_gpu_particles_2d_finished"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://dt4tiebhqufv6"]
+
+[ext_resource type="Script" path="res://scripts/engine_parts.gd" id="1_82cni"]
+[ext_resource type="Texture2D" uid="uid://b2uvflqe60qxk" path="res://art/boss/power_core.png" id="2_rfklf"]
+[ext_resource type="Texture2D" uid="uid://y17uhqun8hfh" path="res://art/boss/power_core_broken.png" id="3_u2bkg"]
+[ext_resource type="PackedScene" uid="uid://cjrurkpoduebb" path="res://scenes/explosion.tscn" id="4_mwpm8"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xeo2w"]
+
+[node name="EngineParts" type="Area2D"]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("1_82cni")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(2.20814, 1.98837)
+shape = SubResource("CircleShape2D_xeo2w")
+
+[node name="WorkingEngine" type="Sprite2D" parent="."]
+texture = ExtResource("2_rfklf")
+
+[node name="BrokenEngine" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("3_u2bkg")
+
+[node name="Explosion" parent="." instance=ExtResource("4_mwpm8")]
+scale = Vector2(1.5, 1.5)
+frame_progress = 0.0
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered" unbinds=1]

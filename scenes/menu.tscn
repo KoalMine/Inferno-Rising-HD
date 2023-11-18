@@ -1,0 +1,48 @@
+[gd_scene load_steps=3 format=3 uid="uid://jg14yjljeuxm"]
+
+[ext_resource type="Texture2D" uid="uid://c4uhpty0m4qcr" path="res://art/UI/min.png" id="1_hwb2r"]
+[ext_resource type="Script" path="res://scripts/menu.gd" id="1_v4cul"]
+
+[node name="Menu" type="CanvasLayer"]
+script = ExtResource("1_v4cul")
+
+[node name="PopupMenu" type="PopupMenu" parent="."]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -88.0
+offset_bottom = 74.0
+grow_horizontal = 0
+
+[node name="Button" type="Button" parent="Control"]
+layout_mode = 1
+offset_right = 24.0
+offset_bottom = 24.0
+scale = Vector2(0.376235, 0.357526)
+size_flags_horizontal = 8
+size_flags_vertical = 0
+icon = ExtResource("1_hwb2r")
+
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 0
+offset_right = 87.0
+offset_bottom = 66.0
+theme_override_constants/margin_top = 10
+
+[node name="HBoxContainer" type="VBoxContainer" parent="Control/MarginContainer"]
+layout_mode = 2
+
+[node name="Glow" type="CheckButton" parent="Control/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Glow"
+
+[node name="HDR" type="CheckButton" parent="Control/MarginContainer/HBoxContainer"]
+layout_mode = 2
+disabled = true
+text = "HDR"
+
+[connection signal="toggled" from="Control/MarginContainer/HBoxContainer/Glow" to="." method="_on_glow_toggled"]
+[connection signal="toggled" from="Control/MarginContainer/HBoxContainer/HDR" to="." method="_on_hdr_toggled"]
