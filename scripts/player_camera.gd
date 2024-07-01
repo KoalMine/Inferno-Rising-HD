@@ -52,6 +52,7 @@ func _on_menu_glow(toggled_on):
 	($"../WorldEnvironment" as WorldEnvironment).environment.glow_enabled = toggled_on
 func _on_menu_hdr(toggled_on):
 	ProjectSettings.set_setting("rendering/viewport/hdr_2d",toggled_on)
+	get_viewport().use_hdr_2d=toggled_on
 
 
 func _on_boss_starter_body_entered(body: Node2D) -> void:

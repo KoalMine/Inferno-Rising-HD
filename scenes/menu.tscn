@@ -41,7 +41,7 @@ text = "Glow"
 
 [node name="HDR" type="CheckButton" parent="Control/MarginContainer/HBoxContainer"]
 layout_mode = 2
-disabled = true
+button_pressed = true
 text = "HDR"
 
 [connection signal="toggled" from="Control/MarginContainer/HBoxContainer/Glow" to="." method="_on_glow_toggled"]

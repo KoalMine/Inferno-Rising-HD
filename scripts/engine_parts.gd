@@ -11,7 +11,7 @@ func _ready():
 	total_engines_left += 1
 
 func _process(_delta):
-	print(total_engines_left)
+	#print(total_engines_left)
 	if total_engines_left == 0:
 		all_engines_destroyed.emit()
 
@@ -26,3 +26,4 @@ func destroy_engine():
 	$BrokenEngine.visible = true
 	$Explosion.play("default")
 	total_engines_left -= 1
+	#print("desyrioued")
