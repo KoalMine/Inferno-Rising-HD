@@ -15,16 +15,10 @@ signal drill_finished
 @onready var Anim2: AnimationPlayer = $AnimationPlayer2
 @onready var Exploders: Node2D = $Exploders
 
-var engines = Engines.new()
-
-func _ready() -> void:
-	engines.connect("all_engines_destroyed", death)
-	
 func _process(_delta) -> void:
 	pass
 		
 #region States
-
 func drill_to_normal_state() -> void:
 	# Drill go to default scale and position
 	Drill.scale = Vector2(0.75,0.75)
@@ -103,7 +97,6 @@ func _on_laser_finished() -> void:
 		laser_sweep()
 #endregion
 
-
 func _on_drill_body_entered(body) -> void:
 	if body is Player:
 		PlayerAutoLoad.health -= 1
@@ -133,4 +126,11 @@ func death() -> void:
 	for explodees: AnimatedSprite2D in Exploders.get_children():
 		explodees.play("default")
 		await get_tree().create_timer(0.2).timeout
-	engines.free()
+	for explodees: AnimatedSprite2D in Exploders.get_children():
+		explodees.play("default")
+		await get_tree().create_timer(0.2).timeout
+	queue_free()
+	#engines.free() # Free the script
+
+func _on_engine_parts_all_engines_destroyed() -> void:
+	death()
